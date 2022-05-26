@@ -5,6 +5,7 @@ import android.content.Intent;
 
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,6 +42,7 @@ public class CartActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
+        Log.d("myTag", "onDataChange: loading bar dismiss1");
         recyclerView = findViewById(R.id.cart_list);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
@@ -48,9 +50,11 @@ public class CartActivity extends AppCompatActivity{
         NextProcessBtn = (Button)findViewById(R.id.next_btn);
         txtTotalAmount = (TextView)findViewById(R.id.total_price);
         txtMsg1 = (TextView)findViewById(R.id.msg1);
+        Log.d("myTag", "onDataChange: loading bar dismiss2");
         NextProcessBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.d("myTag", "onDataChange: loading bar dismiss5");
                 txtTotalAmount.setText("Total Price = Rs."+String.valueOf(overTotalPrice));
                 Intent intent = new Intent(CartActivity.this,ConfirmFinalOrderActivity.class);
                 intent.putExtra("Total Price", String.valueOf(overTotalPrice));
@@ -58,31 +62,39 @@ public class CartActivity extends AppCompatActivity{
                 finish();
             }
         });
-
+        Log.d("myTag", "onDataChange: loading bar dismiss3");
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         CheckOrderState();
+        Log.d("myTag", "onDataChange: loading bar dismiss4");
         final DatabaseReference cartListRef = FirebaseDatabase.getInstance().getReference().child("Cart List");
         FirebaseRecyclerOptions<Cart> options =
                 new FirebaseRecyclerOptions.Builder<Cart>()
                         .setQuery(cartListRef.child("User view")
                                 .child(Prevalent.currentOnlineUser.getPhone()).child("Products"),Cart.class).build();
+        Log.d("myTag", "onDataChange: loading bar dismiss6");
         FirebaseRecyclerAdapter<Cart, CartViewHolder> adapter
                 = new FirebaseRecyclerAdapter<Cart, CartViewHolder>(options) {
             @Override
             protected void onBindViewHolder(@NonNull CartViewHolder holder, int position, @NonNull final Cart model) {
+                Log.d("myTag", "onDataChange: loading bar dismiss7");
                 holder.txtProductQuantity.setText("Quantity = "+model.getQuantity());
+                Log.d("myTag", "onDataChange: loading bar dismiss10");
                 holder.txtProductPrice.setText("Price = "+model.getPrice()+" Rs.");
+                Log.d("myTag", "onDataChange: loading bar dismiss11");
                 holder.txtProductName.setText(model.getPname());
+                Log.d("myTag", "onDataChange: loading bar dismiss12");
                 int oneTyprProductTPrice = ((Integer.valueOf(model.getPrice())))* Integer.valueOf(model.getQuantity());
                 overTotalPrice = overTotalPrice + oneTyprProductTPrice;
+                Log.d("myTag", "onDataChange: loading bar dismiss9"+ overTotalPrice);
 
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        Log.d("myTag", "onDataChange: loading bar dismiss8");
                         CharSequence options[] = new CharSequence[]
                                 {
                                         "Edit",
@@ -94,6 +106,7 @@ public class CartActivity extends AppCompatActivity{
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 if (i==0){
+                                    Log.d("myTag", "onDataChange: loading bar dismiss1");
                                     Intent intent = new Intent(CartActivity.this,ProductDetailsActivity.class);
                                     intent.putExtra("pid", model.getPid());
                                     startActivity(intent);

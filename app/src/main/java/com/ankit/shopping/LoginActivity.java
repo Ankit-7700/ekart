@@ -5,6 +5,7 @@ import android.content.Intent;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -77,6 +78,8 @@ public class LoginActivity extends AppCompatActivity {
         String phone = InputPhoneNumber.getText().toString();
         String password = InputPassword.getText().toString();
 
+
+
         if (TextUtils.isEmpty(phone))
         {
             Toast.makeText(this, "Please write your phone number...", Toast.LENGTH_SHORT).show();
@@ -98,27 +101,37 @@ public class LoginActivity extends AppCompatActivity {
     }
     private void AllowAccessToAccount(final String phone, final String password)
     {
+        //Log.d("myTag", "onDataChange: loading bar dismiss1");
+
 
         if(chkBoxRememberMe.isChecked())
         {
+            //Log.d("myTag", "onDataChange: loading bar dismiss2");
             Paper.book().write(Prevalent.UserPhoneKey, phone);
             Paper.book().write(Prevalent.UserPasswordKey, password);
         }
+        //Log.d("myTag", "onDataChange: loading bar dismiss9");
         final DatabaseReference RootRef;
         RootRef = FirebaseDatabase.getInstance().getReference();
         RootRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.child(parentDbName).child(phone).exists()){
+                    //Log.d("myTag", "onDataChange: loading bar dismiss7");
 
                     Users usersData = dataSnapshot.child(parentDbName).child(phone).getValue(Users.class);
-                    if (usersData.getPhone().equals(phone))
+                    //Log.d("myTag", usersData.getPhone()+" "+phone);
+                    if (usersData.getPhone().toString().equals(phone.toString()))
                     {
+                        //Log.d("myTag", "onDataChange: loading bar dismiss4");
                         if (usersData.getPassword().equals(password))
                         {
+                            //Log.d("myTag", "onDataChange: loading bar dismiss5");
                             if(parentDbName.equals("Admins"))
                             {
+                                //Log.d("myTag", "onDataChange: loading bar dismiss6");
                                 Toast.makeText(LoginActivity.this, "Welcome Admin, you are logged in Successfully...", Toast.LENGTH_SHORT).show();
+                                //Log.d("myTag", "onDataChange: loading bar dismiss");
                                 loadingBar.dismiss();
 
                                 Intent intent = new Intent(LoginActivity.this, com.ankit.shopping.AdminCategoryActivity.class);
@@ -138,6 +151,9 @@ public class LoginActivity extends AppCompatActivity {
                             loadingBar.dismiss();
                             Toast.makeText(LoginActivity.this,"Password is incorrect",Toast.LENGTH_SHORT).show();
                         }
+                    } else {
+                        loadingBar.dismiss();
+                        Toast.makeText(LoginActivity.this,"unknown",Toast.LENGTH_SHORT).show();
                     }
                 }
                 else {

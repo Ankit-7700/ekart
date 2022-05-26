@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+
     xmlns:tools="http://schemas.android.com/tools"
+
     package="com.ankit.shopping">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -13,22 +15,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Ekart"
-        tools:replace="android:theme">
-        <activity android:name="com.ankit.shopping.HomeActivity"
 
-            android:theme="@style/Theme.AppCompat.NoActionBar"/>
-        <activity android:name="com.ankit.shopping.SettinsActivity" />
-        <activity android:name="com.ankit.shopping.SearchProductsActivity" />
-        <activity android:name="com.ankit.shopping.RegisterActivity" />
-        <activity android:name="com.ankit.shopping.ProductDetailsActivity" />
-        <activity android:name="com.ankit.shopping.LoginActivity" />
-        <activity android:name="com.ankit.shopping.ConfirmFinalOrderActivity" />
-        <activity android:name="com.ankit.shopping.CartActivity" />
-        <activity android:name="com.ankit.shopping.AdminUserProductsActivity" />
-        <activity android:name="com.ankit.shopping.AdminNewOrdersActivity" />
-        <activity android:name="com.ankit.shopping.AdminCategoryActivity" />
-        <activity android:name="com.ankit.shopping.AdminAddNewProductActivity" />
-        <activity android:name="com.ankit.shopping.MainActivity">
+        tools:replace="android:theme">
+        <activity
+            android:name=".HomeActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity android:name=".SettinsActivity" />
+        <activity android:name=".SearchProductsActivity" />
+        <activity android:name=".RegisterActivity" />
+        <activity android:name=".ProductDetailsActivity" />
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".ConfirmFinalOrderActivity" />
+        <activity android:name=".CartActivity" />
+        <activity android:name=".AdminUserProductsActivity" />
+        <activity android:name=".AdminNewOrdersActivity" />
+        <activity android:name=".AdminCategoryActivity" />
+        <activity android:name=".AdminAddNewProductActivity" />
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
